@@ -2,33 +2,34 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:picture) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @images.each do |image| %>
-      <tr>
-        <td><%= link_to image.name, image_path(image) %></td>
-        <td><%= image_tag image.picture.url, size: "100x100" %></td>
 
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_image_path(image), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      image_path(image),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="instagram-content">
+                    <h3>Latest Photos</h3>
+                    <div class="row photos-wrap">
+                    <!-- Instafeed target div -->
+                    <div id="instafeed"></div>
+  <% @images.each do |image| %>          
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="photo-box">
+                            <div class="image-wrap">
+                            <%= link_to image_tag(image.picture.url), image_path(image) %>
+                                <div class="likes">309 Likes</div>
+                            </div>
+                            <div class="description">
+                                <%= image.name %>
+                                <div class="user"><%= image.user.email %></div>
+                            </div>
+                        </div>
+  </div>
+                    <% end %>
+                  </div>
+                </div>
+            </div>
+        </div>
+</div>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_image_path,
